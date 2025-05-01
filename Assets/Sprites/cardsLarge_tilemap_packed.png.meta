@@ -93,7 +93,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_0
+      name: A_heart
       rect:
         serializedVersion: 2
         x: 11
@@ -114,7 +114,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_1
+      name: 2_heart
       rect:
         serializedVersion: 2
         x: 75
@@ -135,7 +135,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_2
+      name: 3_heart
       rect:
         serializedVersion: 2
         x: 139
@@ -156,7 +156,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_3
+      name: 4_heart
       rect:
         serializedVersion: 2
         x: 203
@@ -177,7 +177,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_4
+      name: 5_heart
       rect:
         serializedVersion: 2
         x: 267
@@ -198,7 +198,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_5
+      name: 6_heart
       rect:
         serializedVersion: 2
         x: 331
@@ -219,10 +219,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_6
+      name: 7_heart
       rect:
         serializedVersion: 2
-        x: 395
+        x: 394
         y: 194
         width: 42
         height: 60
@@ -240,7 +240,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_7
+      name: 8_heart
       rect:
         serializedVersion: 2
         x: 459
@@ -261,7 +261,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_8
+      name: 9_heart
       rect:
         serializedVersion: 2
         x: 523
@@ -282,7 +282,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_9
+      name: 10_heart
       rect:
         serializedVersion: 2
         x: 587
@@ -303,7 +303,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_10
+      name: J_heart
       rect:
         serializedVersion: 2
         x: 651
@@ -324,7 +324,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_11
+      name: Q_heart
       rect:
         serializedVersion: 2
         x: 715
@@ -345,7 +345,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_12
+      name: K_heart
       rect:
         serializedVersion: 2
         x: 779
@@ -366,7 +366,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_14
+      name: A_diamond
       rect:
         serializedVersion: 2
         x: 11
@@ -387,7 +387,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_15
+      name: 2_diamond
       rect:
         serializedVersion: 2
         x: 75
@@ -408,7 +408,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_16
+      name: 3_diamond
       rect:
         serializedVersion: 2
         x: 139
@@ -429,7 +429,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_17
+      name: 4_diamond
       rect:
         serializedVersion: 2
         x: 203
@@ -450,7 +450,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_18
+      name: 5_diamond
       rect:
         serializedVersion: 2
         x: 267
@@ -471,11 +471,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_19
+      name: 6_diamond
       rect:
         serializedVersion: 2
         x: 331
-        y: 130
+        y: 131
         width: 42
         height: 60
       alignment: 0
@@ -492,7 +492,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_20
+      name: 7_diamond
       rect:
         serializedVersion: 2
         x: 395
@@ -513,7 +513,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_21
+      name: 8_diamond
       rect:
         serializedVersion: 2
         x: 459
@@ -534,7 +534,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_22
+      name: 9_diamond
       rect:
         serializedVersion: 2
         x: 523
@@ -555,7 +555,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_23
+      name: 10_diamond
       rect:
         serializedVersion: 2
         x: 587
@@ -576,7 +576,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_24
+      name: J_diamond
       rect:
         serializedVersion: 2
         x: 651
@@ -597,7 +597,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_25
+      name: Q_diamond
       rect:
         serializedVersion: 2
         x: 715
@@ -618,7 +618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_26
+      name: K_diamond
       rect:
         serializedVersion: 2
         x: 779
@@ -639,7 +639,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_27
+      name: cardBack
       rect:
         serializedVersion: 2
         x: 843
@@ -660,7 +660,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_28
+      name: A_spade
       rect:
         serializedVersion: 2
         x: 11
@@ -681,7 +681,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_29
+      name: 2_spade
       rect:
         serializedVersion: 2
         x: 75
@@ -702,7 +702,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_30
+      name: 3_spade
       rect:
         serializedVersion: 2
         x: 139
@@ -723,7 +723,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_31
+      name: 4_spade
       rect:
         serializedVersion: 2
         x: 203
@@ -744,7 +744,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_32
+      name: 5_spade
       rect:
         serializedVersion: 2
         x: 267
@@ -765,7 +765,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_33
+      name: 6_spade
       rect:
         serializedVersion: 2
         x: 331
@@ -786,7 +786,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_34
+      name: 7_spade
       rect:
         serializedVersion: 2
         x: 395
@@ -807,7 +807,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_35
+      name: 8_spade
       rect:
         serializedVersion: 2
         x: 459
@@ -828,7 +828,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_36
+      name: 9_spade
       rect:
         serializedVersion: 2
         x: 523
@@ -849,7 +849,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_37
+      name: 10_spade
       rect:
         serializedVersion: 2
         x: 587
@@ -870,7 +870,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_38
+      name: J_spade
       rect:
         serializedVersion: 2
         x: 651
@@ -891,7 +891,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_39
+      name: Q_spade
       rect:
         serializedVersion: 2
         x: 715
@@ -912,7 +912,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_40
+      name: K_spade
       rect:
         serializedVersion: 2
         x: 779
@@ -933,11 +933,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_41
+      name: Joker_Red
       rect:
         serializedVersion: 2
         x: 843
-        y: 65
+        y: 66
         width: 42
         height: 60
       alignment: 0
@@ -954,7 +954,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_42
+      name: A_club
       rect:
         serializedVersion: 2
         x: 11
@@ -975,7 +975,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_43
+      name: 2_club
       rect:
         serializedVersion: 2
         x: 75
@@ -996,7 +996,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_44
+      name: 3_club
       rect:
         serializedVersion: 2
         x: 139
@@ -1017,7 +1017,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_45
+      name: 4_club
       rect:
         serializedVersion: 2
         x: 203
@@ -1038,7 +1038,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_46
+      name: 5_club
       rect:
         serializedVersion: 2
         x: 267
@@ -1059,7 +1059,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_47
+      name: 6_club
       rect:
         serializedVersion: 2
         x: 331
@@ -1080,7 +1080,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_48
+      name: 7_club
       rect:
         serializedVersion: 2
         x: 395
@@ -1101,7 +1101,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_49
+      name: 8_club
       rect:
         serializedVersion: 2
         x: 459
@@ -1122,7 +1122,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_50
+      name: 9_club
       rect:
         serializedVersion: 2
         x: 523
@@ -1143,7 +1143,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_51
+      name: 10_club
       rect:
         serializedVersion: 2
         x: 587
@@ -1164,7 +1164,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_52
+      name: J_club
       rect:
         serializedVersion: 2
         x: 651
@@ -1185,7 +1185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_53
+      name: Q_club
       rect:
         serializedVersion: 2
         x: 715
@@ -1206,7 +1206,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cardsLarge_tilemap_packed_54
+      name: K_club
       rect:
         serializedVersion: 2
         x: 779
@@ -1226,6 +1226,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Joker_Black
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 2
+        width: 42
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35c60e012c644224eabf8e970ac8c179
+      internalID: 2093615475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1237,62 +1258,63 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      cardsLarge_tilemap_packed_0: 1113960917
-      cardsLarge_tilemap_packed_1: 774732059
-      cardsLarge_tilemap_packed_10: 405148393
-      cardsLarge_tilemap_packed_11: 1495719660
-      cardsLarge_tilemap_packed_12: -1086435153
+      10_club: -1363650093
+      10_diamond: -2113374002
+      10_heart: 342836640
+      10_spade: 968255488
+      2_club: -2118482393
+      2_diamond: -1793517133
+      2_heart: 774732059
+      2_spade: 1878829641
+      3_club: 1460707687
+      3_diamond: -962647358
+      3_heart: 351740609
+      3_spade: -1030891801
+      4_club: -281429817
+      4_diamond: -990218686
+      4_heart: 2118516718
+      4_spade: 746151610
+      5_club: 871561229
+      5_diamond: -511684737
+      5_heart: 1670317713
+      5_spade: -114733672
+      6_club: -894339022
+      6_diamond: 1861881956
+      6_heart: 1667578435
+      6_spade: 2065281491
+      7_club: 1251565851
+      7_diamond: -787253413
+      7_heart: 2076280078
+      7_spade: 727206628
+      8_club: 1048841913
+      8_diamond: 1077277702
+      8_heart: -52379841
+      8_spade: -1750712073
+      9_club: -1189536143
+      9_diamond: 861188662
+      9_heart: 1261312635
+      9_spade: -791773479
+      A_club: -204416428
+      A_diamond: -678566224
+      A_heart: 1113960917
+      A_spade: 1276049579
+      J_club: -1869897777
+      J_diamond: 1619770143
+      J_heart: 405148393
+      J_spade: -168473548
+      Joker_Black: 2093615475
+      Joker_Red: 592197852
+      K_club: 122414678
+      K_diamond: -261444190
+      K_heart: -1086435153
+      K_spade: 564417849
+      Q_club: -1746444310
+      Q_diamond: 1006182248
+      Q_heart: 1495719660
+      Q_spade: -1516896087
+      cardBack: 558783768
       cardsLarge_tilemap_packed_13: 1064221374
-      cardsLarge_tilemap_packed_14: -678566224
-      cardsLarge_tilemap_packed_15: -1793517133
-      cardsLarge_tilemap_packed_16: -962647358
-      cardsLarge_tilemap_packed_17: -990218686
-      cardsLarge_tilemap_packed_18: -511684737
-      cardsLarge_tilemap_packed_19: 1861881956
-      cardsLarge_tilemap_packed_2: 351740609
-      cardsLarge_tilemap_packed_20: -787253413
-      cardsLarge_tilemap_packed_21: 1077277702
-      cardsLarge_tilemap_packed_22: 861188662
-      cardsLarge_tilemap_packed_23: -2113374002
-      cardsLarge_tilemap_packed_24: 1619770143
-      cardsLarge_tilemap_packed_25: 1006182248
-      cardsLarge_tilemap_packed_26: -261444190
-      cardsLarge_tilemap_packed_27: 558783768
-      cardsLarge_tilemap_packed_28: 1276049579
-      cardsLarge_tilemap_packed_29: 1878829641
-      cardsLarge_tilemap_packed_3: 2118516718
-      cardsLarge_tilemap_packed_30: -1030891801
-      cardsLarge_tilemap_packed_31: 746151610
-      cardsLarge_tilemap_packed_32: -114733672
-      cardsLarge_tilemap_packed_33: 2065281491
-      cardsLarge_tilemap_packed_34: 727206628
-      cardsLarge_tilemap_packed_35: -1750712073
-      cardsLarge_tilemap_packed_36: -791773479
-      cardsLarge_tilemap_packed_37: 968255488
-      cardsLarge_tilemap_packed_38: -168473548
-      cardsLarge_tilemap_packed_39: -1516896087
-      cardsLarge_tilemap_packed_4: 1670317713
-      cardsLarge_tilemap_packed_40: 564417849
-      cardsLarge_tilemap_packed_41: 592197852
-      cardsLarge_tilemap_packed_42: -204416428
-      cardsLarge_tilemap_packed_43: -2118482393
-      cardsLarge_tilemap_packed_44: 1460707687
-      cardsLarge_tilemap_packed_45: -281429817
-      cardsLarge_tilemap_packed_46: 871561229
-      cardsLarge_tilemap_packed_47: -894339022
-      cardsLarge_tilemap_packed_48: 1251565851
-      cardsLarge_tilemap_packed_49: 1048841913
-      cardsLarge_tilemap_packed_5: 1667578435
-      cardsLarge_tilemap_packed_50: -1189536143
-      cardsLarge_tilemap_packed_51: -1363650093
-      cardsLarge_tilemap_packed_52: -1869897777
-      cardsLarge_tilemap_packed_53: -1746444310
-      cardsLarge_tilemap_packed_54: 122414678
       cardsLarge_tilemap_packed_55: -124989856
-      cardsLarge_tilemap_packed_6: 2076280078
-      cardsLarge_tilemap_packed_7: -52379841
-      cardsLarge_tilemap_packed_8: 1261312635
-      cardsLarge_tilemap_packed_9: 342836640
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

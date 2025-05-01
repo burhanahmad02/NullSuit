@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using static GameData;
 
 
 public class CardManager : MonoBehaviour
@@ -264,15 +265,26 @@ public class CardManager : MonoBehaviour
         AdjustGridCellSize();
         InitializeProgressBar();
 
-        // Set flipped/matched states after instantiating the cards
         for (int i = 0; i < data.cards.Count; i++)
         {
+            CardData cardData = data.cards[i];
+            Debug.Log($"Card {i}: spriteName={cardData.spriteName}, isFlipped={cardData.isFlipped}, isMatched={cardData.isMatched}");
+
             Card card = cardParent.GetChild(i).GetComponent<Card>();
-            card.frontSprite = System.Array.Find(cardFrontSprites, s => s.name == data.cards[i].spriteName);
-            card.isMatched = data.cards[i].isMatched;
-            if (data.cards[i].isFlipped)
+
+            if (cardData.isMatched)
             {
-                card.FlipImmediate(); // You may need to create this method to set flip state visually
+                card.frontSprite = System.Array.Find(cardFrontSprites, s => s.name == cardData.spriteName);
+                card.FlipImmediate(); // <-- This shows the front immediately
+                Debug.Log($"Assigned sprite '{cardData.spriteName}' to matched card at index {i}.");
+            }
+
+            card.isMatched = cardData.isMatched;
+
+            // Reset flip state
+            if (cardData.isFlipped)
+            {
+                cardData.isFlipped = false;
             }
         }
 

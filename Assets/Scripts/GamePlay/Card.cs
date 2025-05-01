@@ -16,9 +16,17 @@ public class Card : MonoBehaviour
     {
         image = GetComponentInChildren<Image>();
 
-        image.sprite = backSprite;
-
+        // Only set backSprite if card is not flipped or matched
+        if (!isFlipped && !isMatched)
+        {
+            image.sprite = backSprite;
+        }
+        else
+        {
+            image.sprite = frontSprite;
+        }
     }
+
     public void Flip()
     {
         if (isMatched || isFlipped) return; // Don't allow flipping back via user input
@@ -97,10 +105,11 @@ public class Card : MonoBehaviour
     }
     public void FlipImmediate()
     {
-        // Set the front image and state directly without animation
         isFlipped = true;
         image.sprite = frontSprite;
+        transform.localScale = new Vector3(1, 1, 1);
     }
+
 
 
 

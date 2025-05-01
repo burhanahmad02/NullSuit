@@ -14,8 +14,17 @@ public class Card : MonoBehaviour
 
     public void Flip()
     {
-        if (isMatched || isFlipped) return;
-        StartCoroutine(FlipAnimation());
+        if (isMatched) return; // No flip if the card is matched
+
+        // If the card is already flipped and not matched, flip it back
+        if (isFlipped)
+        {
+            StartCoroutine(FlipBackAnimation());
+        }
+        else
+        {
+            StartCoroutine(FlipAnimation());
+        }
     }
 
     IEnumerator FlipAnimation()
@@ -28,8 +37,8 @@ public class Card : MonoBehaviour
             yield return null;
         }
 
-        isFlipped = !isFlipped;
-        image.sprite = isFlipped ? frontSprite : backSprite;
+        isFlipped = true;
+        image.sprite = frontSprite;
 
         time = 0;
         while (time < 0.5f)
@@ -41,4 +50,27 @@ public class Card : MonoBehaviour
 
         FindObjectOfType<CardManager>().OnCardFlipped(this);
     }
+
+    IEnumerator FlipBackAnimation()
+    {
+        float time = 0;
+        while (time < 0.5f)
+        {
+            transform.localScale = new Vector3(Mathf.Lerp(1, 0, time * 2), 1, 1);
+            time += Time.deltaTime * flipSpeed;
+            yield return null;
+        }
+
+        isFlipped = false;
+        image.sprite = backSprite;
+
+        time = 0;
+        while (time < 0.5f)
+        {
+            transform.localScale = new Vector3(Mathf.Lerp(0, 1, time * 2), 1, 1);
+            time += Time.deltaTime * flipSpeed;
+            yield return null;
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+    [SerializeField]
     private List<Card> flippedCards = new List<Card>();
 
     public void OnCardFlipped(Card card)

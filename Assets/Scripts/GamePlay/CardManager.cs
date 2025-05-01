@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,20 @@ public class CardManager : MonoBehaviour
 {
     public int rows = 2;
     public int columns = 3;
+
+    public TextMeshProUGUI matchText;
+    public TextMeshProUGUI turnText;
+
+    private int matchesMade = 0;
+    private int turnsTaken = 0;
+    public Slider progressBar; // Or use Image if you're using a filled image instead
+
     public GameObject cardPrefab;
-    public Transform cardParent; 
+    public Transform cardParent;
     public Sprite[] cardFrontSprites;
     private List<Card> flippedCards = new List<Card>();
     private List<Sprite> deck = new List<Sprite>();
+
 
     void Start()
     {
@@ -20,6 +30,7 @@ public class CardManager : MonoBehaviour
         GenerateDeck();
         GenerateGrid();
         AdjustGridCellSize();
+        InitializeProgressBar(); // <-- New line
     }
 
     void GenerateDeck()
@@ -129,19 +140,40 @@ public class CardManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        turnsTaken++;
+
         if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
         {
             Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
             flippedCards[0].isMatched = true;
             flippedCards[1].isMatched = true;
+            matchesMade++;
+
+            progressBar.value = matchesMade; // <--- update progress
         }
+
         else
         {
             flippedCards[0].Unflip();
             flippedCards[1].Unflip();
-
         }
 
         flippedCards.Clear();
+        UpdateUI();
     }
+
+    //UI code 
+    void UpdateUI()
+    {
+        matchText.text = "Matches: " + matchesMade;
+        turnText.text = "Turns: " + turnsTaken;
+    }
+    void InitializeProgressBar()
+    {
+        int totalMatches = (rows * columns) / 2;
+        progressBar.maxValue = totalMatches;
+        progressBar.value = 0;
+    }
+
+
 }

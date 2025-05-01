@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -13,6 +14,9 @@ public class AudioManager : MonoBehaviour
     private const string MUSIC_KEY = "MusicVolume";
     private const string SFX_KEY = "SFXVolume";
 
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
     private void Awake()
     {
         if (Instance != null)
@@ -24,6 +28,10 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadVolume();
+    }
+    public void PlaySFX(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip);
     }
 
     public void SetMusicVolume(float volume)
@@ -46,4 +54,16 @@ public class AudioManager : MonoBehaviour
         SetMusicVolume(GetMusicVolume());
         SetSFXVolume(GetSFXVolume());
     }
+    public IEnumerator FadeOutMusic(float duration)
+    {
+        float startVolume = musicSource.volume;
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            musicSource.volume = Mathf.Lerp(startVolume, 0, t / duration);
+            yield return null;
+        }
+        musicSource.Stop();
+        musicSource.volume = startVolume;
+    }
+
 }

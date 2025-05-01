@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public AudioClip clickSound;
+    void PlayClickSound()
+    {
+        AudioManager.Instance.PlaySFX(clickSound);
+    }
     // Modular level selection
     public void LoadLevel(int levelNumber)
     {

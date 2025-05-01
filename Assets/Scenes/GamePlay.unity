@@ -673,7 +673,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 211, y: 3.2325}
-  m_SizeDelta: {x: 1295.7332, y: 987.7841}
+  m_SizeDelta: {x: 882.4519, y: 987.7841}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &110232695
 MonoBehaviour:
@@ -916,8 +916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7352f498281645b4481fd3c922ae001d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 5
-  columns: 6
+  rows: 10
+  columns: 11
   matchText: {fileID: 173149899}
   turnText: {fileID: 1649416293}
   progressBar: {fileID: 539381650}

@@ -1,179 +1,187 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+    using System.Collections;
+    using System.Collections.Generic;
+    using TMPro;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-public class CardManager : MonoBehaviour
-{
-    public int rows = 2;
-    public int columns = 3;
-
-    public TextMeshProUGUI matchText;
-    public TextMeshProUGUI turnText;
-
-    private int matchesMade = 0;
-    private int turnsTaken = 0;
-    public Slider progressBar; // Or use Image if you're using a filled image instead
-
-    public GameObject cardPrefab;
-    public Transform cardParent;
-    public Sprite[] cardFrontSprites;
-    private List<Card> flippedCards = new List<Card>();
-    private List<Sprite> deck = new List<Sprite>();
-
-
-    void Start()
+    public class CardManager : MonoBehaviour
     {
-        LoadSprites();
+        public int rows = 2;
+        public int columns = 3;
 
-        GenerateDeck();
-        GenerateGrid();
-        AdjustGridCellSize();
-        InitializeProgressBar(); // <-- New line
-    }
+        public TextMeshProUGUI matchText;
+        public TextMeshProUGUI turnText;
 
-    void GenerateDeck()
-    {
-        int totalCards = rows * columns;
-        int totalPairs = totalCards / 2;
+        private int matchesMade = 0;
+        private int turnsTaken = 0;
+        public Slider progressBar; // Or use Image if you're using a filled image instead
 
-        deck.Clear();
+        public GameObject cardPrefab;
+        public Transform cardParent;
+        public Sprite[] cardFrontSprites;
+        private List<Card> flippedCards = new List<Card>();
+        private List<Sprite> deck = new List<Sprite>();
 
-        if (cardFrontSprites.Length < totalPairs)
+
+        void Start()
         {
-            Debug.LogError("Not enough unique sprites to generate the required number of pairs.");
-            return;
+            LoadSprites();
+
+            GenerateDeck();
+            GenerateGrid();
+            AdjustGridCellSize();
+            InitializeProgressBar(); // <-- New line
         }
 
-        // Add each pair twice
-        for (int i = 0; i < totalPairs; i++)
+        void GenerateDeck()
         {
-            deck.Add(cardFrontSprites[i]);
-            deck.Add(cardFrontSprites[i]);
+            int totalCards = rows * columns;
+            int totalPairs = totalCards / 2;
+
+            deck.Clear();
+
+            if (cardFrontSprites.Length < totalPairs)
+            {
+                Debug.LogError("Not enough unique sprites to generate the required number of pairs.");
+                return;
+            }
+
+            // Add each pair twice
+            for (int i = 0; i < totalPairs; i++)
+            {
+                deck.Add(cardFrontSprites[i]);
+                deck.Add(cardFrontSprites[i]);
+            }
+
+            // Shuffle the deck
+            for (int i = 0; i < deck.Count; i++)
+            {
+                Sprite temp = deck[i];
+                int randomIndex = Random.Range(i, deck.Count);
+                deck[i] = deck[randomIndex];
+                deck[randomIndex] = temp;
+            }
         }
 
-        // Shuffle the deck
-        for (int i = 0; i < deck.Count; i++)
+        void GenerateGrid()
         {
-            Sprite temp = deck[i];
-            int randomIndex = Random.Range(i, deck.Count);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
+            for (int i = 0; i < deck.Count; i++)
+            {
+                GameObject cardObj = Instantiate(cardPrefab, cardParent);
+                Card card = cardObj.GetComponent<Card>();
+                card.frontSprite = deck[i];
+                card.image = cardObj.GetComponentInChildren<Image>();
+                card.image.preserveAspect = true;
+                card.image.SetNativeSize();
+                Debug.Log("Card Name: " + card.frontSprite.name);
+                // Assign Flip to Button onClick
+                Button button = cardObj.GetComponent<Button>();
+                button.onClick.AddListener(card.Flip);
+            }
         }
-    }
-
-    void GenerateGrid()
-    {
-        for (int i = 0; i < deck.Count; i++)
+        void AdjustGridCellSize()
         {
-            GameObject cardObj = Instantiate(cardPrefab, cardParent);
-            Card card = cardObj.GetComponent<Card>();
-            card.frontSprite = deck[i];
-            card.image = cardObj.GetComponentInChildren<Image>();
-            card.image.preserveAspect = true;
-            card.image.SetNativeSize();
-            Debug.Log("Card Name: " + card.frontSprite.name);
-            // Assign Flip to Button onClick
-            Button button = cardObj.GetComponent<Button>();
-            button.onClick.AddListener(card.Flip);
-        }
-    }
-    void AdjustGridCellSize()
-    {
         GridLayoutGroup grid = cardParent.GetComponent<GridLayoutGroup>();
         RectTransform rect = cardParent.GetComponent<RectTransform>();
 
         float parentWidth = rect.rect.width;
         float parentHeight = rect.rect.height;
 
-        // Define fixed spacing values (or dynamically compute later)
-        float spacingX = -10f;
-        float spacingY = 10f;
+        // Define the maximum number of rows and columns
+        int maxRows = 10;
+        int maxColumns = 11;
+
+        // Clamp the number of rows and columns to the maximum values
+        rows = Mathf.Clamp(rows, 1, maxRows);
+        columns = Mathf.Clamp(columns, 1, maxColumns);
 
         // Calculate total spacing
-        float totalSpacingX = spacingX * (columns - 1);
-        float totalSpacingY = spacingY * (rows - 1);
+        float totalSpacingX = 10f * (columns - 1);  // Adjust horizontal spacing as needed
+        float totalSpacingY = 10f * (rows - 1);     // Adjust vertical spacing as needed
 
-        // Calculate available size for cells
-        float cellWidth = 150f;
-        float cellHeight = 185f;
+        // Calculate available width and height for cells after accounting for spacing
+        float availableWidth = parentWidth - totalSpacingX;
+        float availableHeight = parentHeight - totalSpacingY;
 
-        // Assign to grid
+        // Calculate cell size based on available width and height
+        float cellWidth = availableWidth / columns;
+        float cellHeight = availableHeight / rows;
+
+        // Assign calculated values to grid
         grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         grid.constraintCount = columns;
         grid.cellSize = new Vector2(cellWidth, cellHeight);
-        grid.spacing = new Vector2(spacingX, spacingY);
+        grid.spacing = new Vector2(10f, 10f);  // Adjust spacing if necessary
     }
 
-    void LoadSprites()
-    {
-        Sprite[] allSprites = Resources.LoadAll<Sprite>("Sprites/Cards");
-
-        // Filter out "cardBack" sprite
-        List<Sprite> frontSprites = new List<Sprite>();
-        foreach (Sprite sprite in allSprites)
+        void LoadSprites()
         {
-            if (sprite.name.ToLower() != "cardBack")  // case-insensitive
+            Sprite[] allSprites = Resources.LoadAll<Sprite>("Sprites/Cards");
+
+            // Filter out "cardBack" sprite
+            List<Sprite> frontSprites = new List<Sprite>();
+            foreach (Sprite sprite in allSprites)
             {
-                frontSprites.Add(sprite);
+                if (sprite.name.ToLower() != "cardBack")  // case-insensitive
+                {
+                    frontSprites.Add(sprite);
+                }
+            }
+
+            cardFrontSprites = frontSprites.ToArray();
+        }
+
+
+
+        public void OnCardFlipped(Card card)
+        {
+            if (flippedCards.Contains(card)) return;
+            flippedCards.Add(card);
+
+            if (flippedCards.Count == 2)
+            {
+                StartCoroutine(CheckMatch());
             }
         }
 
-        cardFrontSprites = frontSprites.ToArray();
-    }
-
-
-
-    public void OnCardFlipped(Card card)
-    {
-        if (flippedCards.Contains(card)) return;
-        flippedCards.Add(card);
-
-        if (flippedCards.Count == 2)
+        IEnumerator CheckMatch()
         {
-            StartCoroutine(CheckMatch());
-        }
-    }
+            yield return new WaitForSeconds(0.5f);
 
-    IEnumerator CheckMatch()
-    {
-        yield return new WaitForSeconds(0.5f);
+            turnsTaken++;
 
-        turnsTaken++;
+            if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
+            {
+                Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
+                flippedCards[0].isMatched = true;
+                flippedCards[1].isMatched = true;
+                matchesMade++;
 
-        if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
-        {
-            Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
-            flippedCards[0].isMatched = true;
-            flippedCards[1].isMatched = true;
-            matchesMade++;
+                progressBar.value = matchesMade; // <--- update progress
+            }
 
-            progressBar.value = matchesMade; // <--- update progress
+            else
+            {
+                flippedCards[0].Unflip();
+                flippedCards[1].Unflip();
+            }
+
+            flippedCards.Clear();
+            UpdateUI();
         }
 
-        else
+        //UI code 
+        void UpdateUI()
         {
-            flippedCards[0].Unflip();
-            flippedCards[1].Unflip();
+            matchText.text = "Matches: " + matchesMade;
+            turnText.text = "Turns: " + turnsTaken;
+        }
+        void InitializeProgressBar()
+        {
+            int totalMatches = (rows * columns) / 2;
+            progressBar.maxValue = totalMatches;
+            progressBar.value = 0;
         }
 
-        flippedCards.Clear();
-        UpdateUI();
-    }
 
-    //UI code 
-    void UpdateUI()
-    {
-        matchText.text = "Matches: " + matchesMade;
-        turnText.text = "Turns: " + turnsTaken;
     }
-    void InitializeProgressBar()
-    {
-        int totalMatches = (rows * columns) / 2;
-        progressBar.maxValue = totalMatches;
-        progressBar.value = 0;
-    }
-
-
-}

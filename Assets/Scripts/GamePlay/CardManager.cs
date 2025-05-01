@@ -29,13 +29,20 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
+        this.rows = GameManager.rows;
+        this.columns = GameManager.columns;
+
         LoadSprites();
+
+        if (GameManager.loadSavedGame && LoadGame())
+            return;
 
         GenerateDeck();
         GenerateGrid();
         AdjustGridCellSize();
-        InitializeProgressBar(); // <-- New line
+        InitializeProgressBar();
     }
+
 
     void GenerateDeck()
     {

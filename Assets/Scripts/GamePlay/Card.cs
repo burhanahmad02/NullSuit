@@ -116,4 +116,3 @@ public class GameData
         public bool isFlipped;
     }
 }
-

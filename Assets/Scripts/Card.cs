@@ -11,12 +11,16 @@ public class Card : MonoBehaviour
     public bool isMatched = false;
 
     private float flipSpeed = 5f;
-
+    private void Start()
+    {
+        GetComponent<Image>().sprite = backSprite;
+        GetComponent<Image>().SetNativeSize();
+    }
     public void Flip()
     {
-        if (isMatched) return; // No flip if the card is matched
+        if (isMatched) return; 
 
-        // If the card is already flipped and not matched, flip it back
+        
         if (isFlipped)
         {
             StartCoroutine(FlipBackAnimation());

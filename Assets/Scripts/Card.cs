@@ -14,7 +14,7 @@ public class Card : MonoBehaviour
     private void Start()
     {
         GetComponent<Image>().sprite = backSprite;
-        GetComponent<Image>().SetNativeSize();
+        
     }
     public void Flip()
     {

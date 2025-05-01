@@ -52,7 +52,11 @@ public class CardManager : MonoBehaviour
             Card card = cardObj.GetComponent<Card>();
             card.frontSprite = deck[i];
             card.image = cardObj.GetComponent<Image>();
+            card.image.SetNativeSize();
             Debug.Log("Card Name: " + card.frontSprite.name);
+            // Assign Flip to Button onClick
+            Button button = cardObj.GetComponent<Button>();
+            button.onClick.AddListener(card.Flip);
         }
     }
 

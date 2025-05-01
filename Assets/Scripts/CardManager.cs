@@ -15,6 +15,7 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
+        AdjustGridCellSize();
         GenerateDeck();
         GenerateGrid();
     }
@@ -53,12 +54,31 @@ public class CardManager : MonoBehaviour
             card.frontSprite = deck[i];
             card.image = cardObj.GetComponent<Image>();
             card.image.SetNativeSize();
+            card.image.preserveAspect = true;
             Debug.Log("Card Name: " + card.frontSprite.name);
             // Assign Flip to Button onClick
             Button button = cardObj.GetComponent<Button>();
             button.onClick.AddListener(card.Flip);
         }
     }
+    void AdjustGridCellSize()
+    {
+        GridLayoutGroup grid = cardParent.GetComponent<GridLayoutGroup>();
+        RectTransform parentRect = cardParent.GetComponent<RectTransform>();
+
+        float spacingX = grid.spacing.x;
+        float spacingY = grid.spacing.y;
+
+        float totalWidth = parentRect.rect.width - (spacingX * (columns - 1));
+        float totalHeight = parentRect.rect.height - (spacingY * (rows - 1));
+
+        float cellWidth = totalWidth / columns;
+        float cellHeight = totalHeight / rows;
+
+        grid.cellSize = new Vector2(cellWidth, cellHeight);
+    }
+
+
 
     public void OnCardFlipped(Card card)
     {

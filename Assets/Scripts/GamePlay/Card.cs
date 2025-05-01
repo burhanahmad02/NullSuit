@@ -95,6 +95,13 @@ public class Card : MonoBehaviour
         }
         transform.localScale = new Vector3(1, 1, 1); // Ensure final scale is exact
     }
+    public void FlipImmediate()
+    {
+        // Set the front image and state directly without animation
+        isFlipped = true;
+        image.sprite = frontSprite;
+    }
+
 
 
 }

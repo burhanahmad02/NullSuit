@@ -92,6 +92,7 @@ public class GameUIManager : MonoBehaviour
         Time.timeScale = 1f;  // Unpause game before loading the new scene
         StartCoroutine(FadeOut(pauseMenuGroup, () =>
         {
+            FindObjectOfType<CardManager>().SaveGame();
             SceneManager.LoadScene("MainMenu"); // Replace with your main menu scene name
         }));
     }

@@ -229,9 +229,10 @@ public class CardManager : MonoBehaviour
     public bool LoadGame()
     {
         string path = GetSavePath();
+
         if (!File.Exists(path))
         {
-            Debug.LogWarning("No saved game found for this level.");
+            Debug.LogWarning("No saved game found at: " + path);
             return false;
         }
 
@@ -243,9 +244,9 @@ public class CardManager : MonoBehaviour
         this.turnsTaken = data.turnsTaken;
         this.matchesMade = data.matchesMade;
 
-        LoadSprites(); // Ensure cardFrontSprites is populated
-
+        LoadSprites(); // Ensure sprites are loaded before assignment
         deck.Clear();
+
         foreach (var cardData in data.cards)
         {
             Sprite sprite = System.Array.Find(cardFrontSprites, s => s.name == cardData.spriteName);
@@ -253,20 +254,33 @@ public class CardManager : MonoBehaviour
             {
                 deck.Add(sprite);
             }
+            else
+            {
+                Debug.LogWarning("Sprite not found: " + cardData.spriteName);
+            }
         }
 
-        // Clear existing cards
-        foreach (Transform child in cardParent)
-            Destroy(child.gameObject);
-
-        GenerateGrid();  // Will assign sprites from deck
+        GenerateGrid();
         AdjustGridCellSize();
         InitializeProgressBar();
-        progressBar.value = matchesMade;
-        UpdateUI();
 
+        // Set flipped/matched states after instantiating the cards
+        for (int i = 0; i < data.cards.Count; i++)
+        {
+            Card card = cardParent.GetChild(i).GetComponent<Card>();
+            card.frontSprite = System.Array.Find(cardFrontSprites, s => s.name == data.cards[i].spriteName);
+            card.isMatched = data.cards[i].isMatched;
+            if (data.cards[i].isFlipped)
+            {
+                card.FlipImmediate(); // You may need to create this method to set flip state visually
+            }
+        }
+
+        UpdateUI();
+        progressBar.value = matchesMade;
         return true;
     }
+
 
     public void ResetGame()
     {

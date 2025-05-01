@@ -18,18 +18,18 @@ public class Card : MonoBehaviour
     }
     public void Flip()
     {
-        if (isMatched) return; 
+        if (isMatched || isFlipped) return; // Don't allow flipping back via user input
 
-        
-        if (isFlipped)
+        StartCoroutine(FlipAnimation());
+    }
+    public void Unflip()
+    {
+        if (isFlipped && !isMatched)
         {
             StartCoroutine(FlipBackAnimation());
         }
-        else
-        {
-            StartCoroutine(FlipAnimation());
-        }
     }
+
 
     IEnumerator FlipAnimation()
     {

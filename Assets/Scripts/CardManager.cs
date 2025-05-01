@@ -83,8 +83,9 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            flippedCards[0].Flip();
-            flippedCards[1].Flip();
+            flippedCards[0].Unflip();
+            flippedCards[1].Unflip();
+
         }
 
         flippedCards.Clear();

@@ -39,5 +39,6 @@ public class Card : MonoBehaviour
             yield return null;
         }
 
+        FindObjectOfType<CardManager>().OnCardFlipped(this);
     }
 }

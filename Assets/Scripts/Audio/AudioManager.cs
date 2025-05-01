@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource musicSource;
     public AudioSource sfxSource;
+    public AudioClip clickSound;
 
     private void Awake()
     {
@@ -27,6 +28,10 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadVolume();
+    }
+    private void Start()
+    {
         LoadVolume();
     }
     public void PlaySFX(AudioClip clip)

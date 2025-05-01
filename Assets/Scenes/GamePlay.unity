@@ -1146,6 +1146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195510837}
   - component: {fileID: 195510836}
+  - component: {fileID: 195510838}
   m_Layer: 0
   m_Name: GameUIManager
   m_TagString: Untagged
@@ -1188,6 +1189,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &195510838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195510835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb32f4019421c214b96e65cc2bbec76f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSlider: {fileID: 70757408}
+  sfxSlider: {fileID: 939280471}
 --- !u!1 &272380716
 GameObject:
   m_ObjectHideFlags: 0

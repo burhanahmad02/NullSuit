@@ -1,86 +1,90 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using TMPro;
-    using UnityEngine;
-    using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 
-    public class CardManager : MonoBehaviour
+
+public class CardManager : MonoBehaviour
+{
+    public int rows = 2;
+    public int columns = 3;
+
+    public TextMeshProUGUI matchText;
+    public TextMeshProUGUI turnText;
+
+    private int matchesMade = 0;
+    private int turnsTaken = 0;
+    public Slider progressBar; // Or use Image if you're using a filled image instead
+
+    public GameObject cardPrefab;
+    public Transform cardParent;
+    public Sprite[] cardFrontSprites;
+    private List<Card> flippedCards = new List<Card>();
+    private List<Sprite> deck = new List<Sprite>();
+
+
+    string saveFilePath => Path.Combine(Application.persistentDataPath, "save.json");
+
+    void Start()
     {
-        public int rows = 2;
-        public int columns = 3;
+        LoadSprites();
 
-        public TextMeshProUGUI matchText;
-        public TextMeshProUGUI turnText;
+        GenerateDeck();
+        GenerateGrid();
+        AdjustGridCellSize();
+        InitializeProgressBar(); // <-- New line
+    }
 
-        private int matchesMade = 0;
-        private int turnsTaken = 0;
-        public Slider progressBar; // Or use Image if you're using a filled image instead
+    void GenerateDeck()
+    {
+        int totalCards = rows * columns;
+        int totalPairs = totalCards / 2;
 
-        public GameObject cardPrefab;
-        public Transform cardParent;
-        public Sprite[] cardFrontSprites;
-        private List<Card> flippedCards = new List<Card>();
-        private List<Sprite> deck = new List<Sprite>();
+        deck.Clear();
 
-
-        void Start()
+        if (cardFrontSprites.Length < totalPairs)
         {
-            LoadSprites();
-
-            GenerateDeck();
-            GenerateGrid();
-            AdjustGridCellSize();
-            InitializeProgressBar(); // <-- New line
+            Debug.LogError("Not enough unique sprites to generate the required number of pairs.");
+            return;
         }
 
-        void GenerateDeck()
+        // Add each pair twice
+        for (int i = 0; i < totalPairs; i++)
         {
-            int totalCards = rows * columns;
-            int totalPairs = totalCards / 2;
-
-            deck.Clear();
-
-            if (cardFrontSprites.Length < totalPairs)
-            {
-                Debug.LogError("Not enough unique sprites to generate the required number of pairs.");
-                return;
-            }
-
-            // Add each pair twice
-            for (int i = 0; i < totalPairs; i++)
-            {
-                deck.Add(cardFrontSprites[i]);
-                deck.Add(cardFrontSprites[i]);
-            }
-
-            // Shuffle the deck
-            for (int i = 0; i < deck.Count; i++)
-            {
-                Sprite temp = deck[i];
-                int randomIndex = Random.Range(i, deck.Count);
-                deck[i] = deck[randomIndex];
-                deck[randomIndex] = temp;
-            }
+            deck.Add(cardFrontSprites[i]);
+            deck.Add(cardFrontSprites[i]);
         }
 
-        void GenerateGrid()
+        // Shuffle the deck
+        for (int i = 0; i < deck.Count; i++)
         {
-            for (int i = 0; i < deck.Count; i++)
-            {
-                GameObject cardObj = Instantiate(cardPrefab, cardParent);
-                Card card = cardObj.GetComponent<Card>();
-                card.frontSprite = deck[i];
-                card.image = cardObj.GetComponentInChildren<Image>();
-                card.image.preserveAspect = true;
-                card.image.SetNativeSize();
-                Debug.Log("Card Name: " + card.frontSprite.name);
-                // Assign Flip to Button onClick
-                Button button = cardObj.GetComponent<Button>();
-                button.onClick.AddListener(card.Flip);
-            }
+            Sprite temp = deck[i];
+            int randomIndex = Random.Range(i, deck.Count);
+            deck[i] = deck[randomIndex];
+            deck[randomIndex] = temp;
         }
-        void AdjustGridCellSize()
+    }
+
+    void GenerateGrid()
+    {
+        for (int i = 0; i < deck.Count; i++)
         {
+            GameObject cardObj = Instantiate(cardPrefab, cardParent);
+            Card card = cardObj.GetComponent<Card>();
+            card.frontSprite = deck[i];
+            card.image = cardObj.GetComponentInChildren<Image>();
+            card.image.preserveAspect = true;
+            card.image.SetNativeSize();
+            Debug.Log("Card Name: " + card.frontSprite.name);
+            // Assign Flip to Button onClick
+            Button button = cardObj.GetComponent<Button>();
+            button.onClick.AddListener(card.Flip);
+        }
+    }
+    void AdjustGridCellSize()
+    {
         GridLayoutGroup grid = cardParent.GetComponent<GridLayoutGroup>();
         RectTransform rect = cardParent.GetComponent<RectTransform>();
 
@@ -114,74 +118,162 @@
         grid.spacing = new Vector2(10f, 10f);  // Adjust spacing if necessary
     }
 
-        void LoadSprites()
+    void LoadSprites()
+    {
+        Sprite[] allSprites = Resources.LoadAll<Sprite>("Sprites/Cards");
+
+        // Filter out "cardBack" sprite
+        List<Sprite> frontSprites = new List<Sprite>();
+        foreach (Sprite sprite in allSprites)
         {
-            Sprite[] allSprites = Resources.LoadAll<Sprite>("Sprites/Cards");
-
-            // Filter out "cardBack" sprite
-            List<Sprite> frontSprites = new List<Sprite>();
-            foreach (Sprite sprite in allSprites)
+            if (sprite.name.ToLower() != "cardBack")  // case-insensitive
             {
-                if (sprite.name.ToLower() != "cardBack")  // case-insensitive
-                {
-                    frontSprites.Add(sprite);
-                }
-            }
-
-            cardFrontSprites = frontSprites.ToArray();
-        }
-
-
-
-        public void OnCardFlipped(Card card)
-        {
-            if (flippedCards.Contains(card)) return;
-            flippedCards.Add(card);
-
-            if (flippedCards.Count == 2)
-            {
-                StartCoroutine(CheckMatch());
+                frontSprites.Add(sprite);
             }
         }
 
-        IEnumerator CheckMatch()
-        {
-            yield return new WaitForSeconds(0.5f);
-
-            turnsTaken++;
-
-            if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
-            {
-                Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
-                flippedCards[0].isMatched = true;
-                flippedCards[1].isMatched = true;
-                matchesMade++;
-
-                progressBar.value = matchesMade; // <--- update progress
-            }
-
-            else
-            {
-                flippedCards[0].Unflip();
-                flippedCards[1].Unflip();
-            }
-
-            flippedCards.Clear();
-            UpdateUI();
-        }
-
-        //UI code 
-        void UpdateUI()
-        {
-            matchText.text = "Matches: " + matchesMade;
-            turnText.text = "Turns: " + turnsTaken;
-        }
-        void InitializeProgressBar()
-        {
-            int totalMatches = (rows * columns) / 2;
-            progressBar.maxValue = totalMatches;
-            progressBar.value = 0;
-        }
-
-
+        cardFrontSprites = frontSprites.ToArray();
     }
+
+
+
+    public void OnCardFlipped(Card card)
+    {
+        if (flippedCards.Contains(card)) return;
+        flippedCards.Add(card);
+
+        if (flippedCards.Count == 2)
+        {
+            StartCoroutine(CheckMatch());
+        }
+    }
+
+    IEnumerator CheckMatch()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        turnsTaken++;
+
+        if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
+        {
+            Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
+            flippedCards[0].isMatched = true;
+            flippedCards[1].isMatched = true;
+            matchesMade++;
+
+            progressBar.value = matchesMade; // <--- update progress
+        }
+
+        else
+        {
+            flippedCards[0].Unflip();
+            flippedCards[1].Unflip();
+        }
+
+        flippedCards.Clear();
+        UpdateUI();
+    }
+
+    //UI code 
+    void UpdateUI()
+    {
+        matchText.text = "Matches: " + matchesMade;
+        turnText.text = "Turns: " + turnsTaken;
+    }
+    void InitializeProgressBar()
+    {
+        int totalMatches = (rows * columns) / 2;
+        progressBar.maxValue = totalMatches;
+        progressBar.value = 0;
+    }
+    // load and save mechanism
+    string GetSavePath()
+    {
+        return Path.Combine(Application.persistentDataPath, $"Save_{rows}x{columns}.json");
+    }
+
+    public void SaveGame()
+    {
+        GameData data = new GameData
+        {
+            rows = this.rows,
+            columns = this.columns,
+            turnsTaken = this.turnsTaken,
+            matchesMade = this.matchesMade,
+            cards = new List<GameData.CardData>()
+        };
+
+        foreach (Transform cardTransform in cardParent)
+        {
+            Card card = cardTransform.GetComponent<Card>();
+            data.cards.Add(new GameData.CardData
+            {
+                spriteName = card.frontSprite.name,
+                isMatched = card.isMatched,
+                isFlipped = card.isFlipped
+            });
+        }
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(GetSavePath(), json);
+        Debug.Log("Game Saved");
+    }
+
+    public bool LoadGame()
+    {
+        string path = GetSavePath();
+        if (!File.Exists(path))
+        {
+            Debug.LogWarning("No saved game found for this level.");
+            return false;
+        }
+
+        string json = File.ReadAllText(path);
+        GameData data = JsonUtility.FromJson<GameData>(json);
+
+        this.rows = data.rows;
+        this.columns = data.columns;
+        this.turnsTaken = data.turnsTaken;
+        this.matchesMade = data.matchesMade;
+
+        LoadSprites(); // Ensure cardFrontSprites is populated
+
+        deck.Clear();
+        foreach (var cardData in data.cards)
+        {
+            Sprite sprite = System.Array.Find(cardFrontSprites, s => s.name == cardData.spriteName);
+            if (sprite != null)
+            {
+                deck.Add(sprite);
+            }
+        }
+
+        // Clear existing cards
+        foreach (Transform child in cardParent)
+            Destroy(child.gameObject);
+
+        GenerateGrid();  // Will assign sprites from deck
+        AdjustGridCellSize();
+        InitializeProgressBar();
+        progressBar.value = matchesMade;
+        UpdateUI();
+
+        return true;
+    }
+
+    public void ResetGame()
+    {
+        string path = GetSavePath();
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
+        // Reset game logic
+        matchesMade = 0;
+        turnsTaken = 0;
+        flippedCards.Clear();
+        Start(); // Restart game fresh
+    }
+
+}

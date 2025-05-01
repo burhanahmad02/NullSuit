@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public class Card : MonoBehaviour
         image = GetComponentInChildren<Image>();
 
         image.sprite = backSprite;
-        
+
     }
     public void Flip()
     {
@@ -25,12 +26,12 @@ public class Card : MonoBehaviour
         StartCoroutine(FlipAnimation());
     }
     public void Unflip()
-{
-    if (isFlipped && !isMatched)
     {
-        StartCoroutine(FlipBackAnimation());
+        if (isFlipped && !isMatched)
+        {
+            StartCoroutine(FlipBackAnimation());
+        }
     }
-}
 
 
     IEnumerator FlipAnimation()
@@ -97,3 +98,22 @@ public class Card : MonoBehaviour
 
 
 }
+// load and save mechanism
+[System.Serializable]
+public class GameData
+{
+    public int rows;
+    public int columns;
+    public int turnsTaken;
+    public int matchesMade;
+    public List<CardData> cards;
+
+    [System.Serializable]
+    public class CardData
+    {
+        public string spriteName;
+        public bool isMatched;
+        public bool isFlipped;
+    }
+}
+

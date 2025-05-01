@@ -13,7 +13,9 @@ public class Card : MonoBehaviour
     private float flipSpeed = 5f;
     private void Start()
     {
-        GetComponent<Image>().sprite = backSprite;
+        image = GetComponentInChildren<Image>();
+
+        image.sprite = backSprite;
         
     }
     public void Flip()
@@ -23,12 +25,12 @@ public class Card : MonoBehaviour
         StartCoroutine(FlipAnimation());
     }
     public void Unflip()
+{
+    if (isFlipped && !isMatched)
     {
-        if (isFlipped && !isMatched)
-        {
-            StartCoroutine(FlipBackAnimation());
-        }
+        StartCoroutine(FlipBackAnimation());
     }
+}
 
 
     IEnumerator FlipAnimation()

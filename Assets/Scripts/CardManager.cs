@@ -15,9 +15,10 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
-        AdjustGridCellSize();
+       
         GenerateDeck();
         GenerateGrid();
+        AdjustGridCellSize();
     }
 
     void GenerateDeck()
@@ -52,9 +53,9 @@ public class CardManager : MonoBehaviour
             GameObject cardObj = Instantiate(cardPrefab, cardParent);
             Card card = cardObj.GetComponent<Card>();
             card.frontSprite = deck[i];
-            card.image = cardObj.GetComponent<Image>();
-            card.image.SetNativeSize();
+            card.image = cardObj.GetComponentInChildren<Image>();
             card.image.preserveAspect = true;
+            card.image.SetNativeSize();
             Debug.Log("Card Name: " + card.frontSprite.name);
             // Assign Flip to Button onClick
             Button button = cardObj.GetComponent<Button>();
@@ -64,19 +65,30 @@ public class CardManager : MonoBehaviour
     void AdjustGridCellSize()
     {
         GridLayoutGroup grid = cardParent.GetComponent<GridLayoutGroup>();
-        RectTransform parentRect = cardParent.GetComponent<RectTransform>();
+        RectTransform rect = cardParent.GetComponent<RectTransform>();
 
-        float spacingX = grid.spacing.x;
-        float spacingY = grid.spacing.y;
+        float parentWidth = rect.rect.width;
+        float parentHeight = rect.rect.height;
 
-        float totalWidth = parentRect.rect.width - (spacingX * (columns - 1));
-        float totalHeight = parentRect.rect.height - (spacingY * (rows - 1));
+        // Define fixed spacing values (or dynamically compute later)
+        float spacingX = -10f;
+        float spacingY = 10f;
 
-        float cellWidth = totalWidth / columns;
-        float cellHeight = totalHeight / rows;
+        // Calculate total spacing
+        float totalSpacingX = spacingX * (columns - 1);
+        float totalSpacingY = spacingY * (rows - 1);
 
+        // Calculate available size for cells
+        float cellWidth = 150f;
+        float cellHeight = 185f;
+
+        // Assign to grid
+        grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        grid.constraintCount = columns;
         grid.cellSize = new Vector2(cellWidth, cellHeight);
+        grid.spacing = new Vector2(spacingX, spacingY);
     }
+   
 
 
 

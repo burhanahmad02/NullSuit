@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -267,42 +267,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7352f498281645b4481fd3c922ae001d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 5
-  columns: 6
+  rows: 2
+  columns: 3
   cardPrefab: {fileID: 3015523206907831440, guid: 31e06059d9df2c44582e2a0c412ba5d9,
     type: 3}
   cardParent: {fileID: 110232694}
-  cardFrontSprites:
-  - {fileID: 1495719660, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: 405148393, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: 1495719660, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: 405148393, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
-  - {fileID: -1869897777, guid: 8c54d16bf761aa84eb25f59892f3c662, type: 3}
+  cardFrontSprites: []
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

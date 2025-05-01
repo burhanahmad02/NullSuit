@@ -15,7 +15,8 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
-       
+        LoadSprites();
+
         GenerateDeck();
         GenerateGrid();
         AdjustGridCellSize();
@@ -23,20 +24,25 @@ public class CardManager : MonoBehaviour
 
     void GenerateDeck()
     {
-        
         int totalCards = rows * columns;
+        int totalPairs = totalCards / 2;
+
         deck.Clear();
 
-        for (int i = 0; i < totalCards / 2; i++)
+        if (cardFrontSprites.Length < totalPairs)
         {
-            if (i < cardFrontSprites.Length)
-            {
-                deck.Add(cardFrontSprites[i]);
-                deck.Add(cardFrontSprites[i]);
-            }
+            Debug.LogError("Not enough unique sprites to generate the required number of pairs.");
+            return;
         }
 
-        
+        // Add each pair twice
+        for (int i = 0; i < totalPairs; i++)
+        {
+            deck.Add(cardFrontSprites[i]);
+            deck.Add(cardFrontSprites[i]);
+        }
+
+        // Shuffle the deck
         for (int i = 0; i < deck.Count; i++)
         {
             Sprite temp = deck[i];
@@ -88,7 +94,23 @@ public class CardManager : MonoBehaviour
         grid.cellSize = new Vector2(cellWidth, cellHeight);
         grid.spacing = new Vector2(spacingX, spacingY);
     }
-   
+
+    void LoadSprites()
+    {
+        Sprite[] allSprites = Resources.LoadAll<Sprite>("Sprites/Cards");
+
+        // Filter out "cardBack" sprite
+        List<Sprite> frontSprites = new List<Sprite>();
+        foreach (Sprite sprite in allSprites)
+        {
+            if (sprite.name.ToLower() != "cardBack")  // case-insensitive
+            {
+                frontSprites.Add(sprite);
+            }
+        }
+
+        cardFrontSprites = frontSprites.ToArray();
+    }
 
 
 

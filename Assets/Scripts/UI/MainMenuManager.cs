@@ -4,14 +4,13 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using static GameManager;
 
 public class MainMenuManager : MonoBehaviour
 {
     public Button[] levelButtons;
     public CanvasGroup mainMenuCanvas;
     public AudioClip clickSound;
-
-    public enum Difficulty { None, Easy, Medium, Hard }
 
     private Difficulty selectedDifficulty = Difficulty.None;
     public Button easyButton, mediumButton, hardButton;

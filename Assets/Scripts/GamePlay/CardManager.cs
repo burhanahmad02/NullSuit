@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using static GameData;
+using static GameManager;
+using UnityEngine.SceneManagement;
 
 
 public class CardManager : MonoBehaviour
@@ -27,16 +29,43 @@ public class CardManager : MonoBehaviour
 
 
     string saveFilePath => Path.Combine(Application.persistentDataPath, "save.json");
+    public Slider healthSlider;
+    public GameObject gameOverPanel;
+    public GameObject gameWinPanel;
+    private Difficulty difficulty;
+    public TextMeshProUGUI difficultyText;
+
+    private int maxHealth;
+    private int currentHealth;
+
+
+    //sfx
+    // Declare the audio clips
+    public AudioClip cardFlipSFX;
+    public AudioClip matchSFX1;
+    public AudioClip matchSFX2;
+    public AudioClip gameOverSFX1;
+    public AudioClip gameOverSFX2;
+    public AudioClip gameWinSFX;
+
+    // AudioManager reference (singleton)
+    private AudioManager audioManager;
 
     void Start()
     {
         this.rows = GameManager.rows;
         this.columns = GameManager.columns;
+        this.difficulty = GameManager.difficulty;
+
+        // Update difficulty text on UI
+        UpdateDifficultyText();
 
         LoadSprites();
 
         if (GameManager.loadSavedGame && LoadGame())
             return;
+
+        SetHealthByDifficulty();
 
         GenerateDeck();
         GenerateGrid();
@@ -44,7 +73,46 @@ public class CardManager : MonoBehaviour
         InitializeProgressBar();
 
         StartCoroutine(ShowAllCardsTemporarily());
+        audioManager = AudioManager.Instance;
     }
+
+    void UpdateDifficultyText()
+    {
+        // Check difficulty and update text
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                difficultyText.text = "Difficulty: Easy";
+                break;
+            case Difficulty.Medium:
+                difficultyText.text = "Difficulty: Medium";
+                break;
+            case Difficulty.Hard:
+                difficultyText.text = "Difficulty: Hard";
+                break;
+        }
+    }
+
+    void SetHealthByDifficulty()
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                maxHealth = 30;
+                break;
+            case Difficulty.Medium:
+                maxHealth = 15;
+                break;
+            case Difficulty.Hard:
+                maxHealth = 7;
+                break;
+        }
+
+        currentHealth = maxHealth;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
+    }
+
 
     IEnumerator ShowAllCardsTemporarily()
     {
@@ -178,11 +246,15 @@ public class CardManager : MonoBehaviour
         if (flippedCards.Contains(card)) return;
         flippedCards.Add(card);
 
+        // Play flip sound
+        audioManager.PlaySFX(cardFlipSFX);
+
         if (flippedCards.Count == 2)
         {
             StartCoroutine(CheckMatch());
         }
     }
+
 
     IEnumerator CheckMatch()
     {
@@ -192,22 +264,67 @@ public class CardManager : MonoBehaviour
 
         if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
         {
-            Debug.Log("Match Found: " + flippedCards[0].frontSprite.name);
             flippedCards[0].isMatched = true;
             flippedCards[1].isMatched = true;
             matchesMade++;
+            progressBar.value = matchesMade;
 
-            progressBar.value = matchesMade; // <--- update progress
+            // Randomly choose one of the two match sounds
+            AudioClip selectedMatchSound = Random.Range(0, 2) == 0 ? matchSFX1 : matchSFX2;
+
+            // Play the selected match sound
+            audioManager.PlaySFX(selectedMatchSound);
+
+            if (matchesMade == (rows * columns) / 2)
+            {
+                GameWin();
+                yield break;
+            }
         }
-
         else
         {
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            if (currentHealth <= 0)
+            {
+                GameOver();
+                yield break;
+            }
+
             flippedCards[0].Unflip();
             flippedCards[1].Unflip();
         }
 
         flippedCards.Clear();
         UpdateUI();
+    }
+    void GameOver()
+    {
+        // Randomly choose one of the two game over sounds
+        AudioClip selectedGameOverSound = Random.Range(0, 2) == 0 ? gameOverSFX1 : gameOverSFX2;
+
+        // Play the selected game over sound
+        audioManager.PlaySFX(selectedGameOverSound);
+
+        // Blur background music by reducing the volume
+        StartCoroutine(audioManager.FadeOutMusic(2f));
+
+        Debug.Log("Game Over!");
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    void GameWin()
+    {
+        // Play win sound
+        audioManager.PlaySFX(gameWinSFX);
+
+        // Blur background music by reducing the volume
+        StartCoroutine(audioManager.FadeOutMusic(2f));
+
+        Debug.Log("You Win!");
+        gameWinPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 
     //UI code 
@@ -324,17 +441,8 @@ public class CardManager : MonoBehaviour
 
     public void ResetGame()
     {
-        string path = GetSavePath();
-        if (File.Exists(path))
-        {
-            File.Delete(path);
-        }
-
-        // Reset game logic
-        matchesMade = 0;
-        turnsTaken = 0;
-        flippedCards.Clear();
-        Start(); // Restart game fresh
+        SaveGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }

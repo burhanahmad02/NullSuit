@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using static GameData;
 using static GameManager;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 
@@ -37,6 +38,11 @@ public class CardManager : MonoBehaviour
 
     private int maxHealth;
     private int currentHealth;
+    private int comboStreak = 0;
+    public TextMeshProUGUI comboText;
+    public Transform shakeTarget;
+
+
 
 
     //sfx
@@ -47,7 +53,8 @@ public class CardManager : MonoBehaviour
     public AudioClip gameOverSFX1;
     public AudioClip gameOverSFX2;
     public AudioClip gameWinSFX;
-
+    public AudioClip comboSFX;
+    public AudioClip mismatchSFX;
     // AudioManager reference (singleton)
     private AudioManager audioManager;
 
@@ -264,10 +271,25 @@ public class CardManager : MonoBehaviour
 
         if (flippedCards[0].frontSprite == flippedCards[1].frontSprite)
         {
+            comboStreak++; // Increase combo on successful match
             flippedCards[0].isMatched = true;
             flippedCards[1].isMatched = true;
             matchesMade++;
             progressBar.value = matchesMade;
+
+            if (comboStreak > 1)
+            {
+                comboText.text = $"Combo x{comboStreak}!";
+                comboText.transform.DOKill(); // Stop any previous tweens
+                comboText.transform.localScale = Vector3.one * 1.5f;
+                comboText.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBounce);
+
+                audioManager.PlaySFX(comboSFX);
+            }
+            else
+            {
+                comboText.text = "";
+            }
 
             // Randomly choose one of the two match sounds
             AudioClip selectedMatchSound = Random.Range(0, 2) == 0 ? matchSFX1 : matchSFX2;
@@ -283,7 +305,11 @@ public class CardManager : MonoBehaviour
         }
         else
         {
+            comboStreak = 0;
             currentHealth--;
+            // In mismatch block
+            shakeTarget.DOShakePosition(0.3f, strength: new Vector3(10f, 10f, 0f), vibrato: 10);
+            audioManager.PlaySFX(mismatchSFX);
             healthSlider.value = currentHealth;
             if (currentHealth <= 0)
             {

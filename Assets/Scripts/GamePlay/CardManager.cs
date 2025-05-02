@@ -42,7 +42,35 @@ public class CardManager : MonoBehaviour
         GenerateGrid();
         AdjustGridCellSize();
         InitializeProgressBar();
+
+        StartCoroutine(ShowAllCardsTemporarily());
     }
+
+    IEnumerator ShowAllCardsTemporarily()
+    {
+        // Flip all cards forward immediately (show front image)
+        foreach (Transform cardTransform in cardParent)
+        {
+            Card card = cardTransform.GetComponent<Card>();
+            if (!card.isMatched)
+            {
+                card.FlipImmediate(); // Shows front instantly
+            }
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        // Flip them back with animation
+        foreach (Transform cardTransform in cardParent)
+        {
+            Card card = cardTransform.GetComponent<Card>();
+            if (!card.isMatched)
+            {
+                card.Unflip(); // Uses animated flip
+            }
+        }
+    }
+
 
 
     void GenerateDeck()

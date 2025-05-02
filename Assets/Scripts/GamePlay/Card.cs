@@ -42,6 +42,7 @@ public class Card : MonoBehaviour
     }
 
 
+
     IEnumerator FlipAnimation()
     {
         float duration = 0.25f;
@@ -107,8 +108,16 @@ public class Card : MonoBehaviour
     {
         isFlipped = true;
         image.sprite = frontSprite;
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = Vector3.one;
     }
+
+
+    public void ForceUnflip()
+    {
+        isFlipped = false;
+        image.sprite = backSprite;
+    }
+
 
 
 
